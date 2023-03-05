@@ -1,7 +1,8 @@
 import express, {Request,Response, NextFunction} from "express";
 import "express-async-errors";
 import {router} from "./routes";
-import cors from "cors"
+import cors from "cors";
+import  path from "path"
 
 const app = express();
 
@@ -10,6 +11,11 @@ app.use(cors());
 
 
 app.use(router);
+
+app.use(
+    "/files",
+    express.static(path.resolve(__dirname, '..', 'tmp'))
+)
 
 app.use((err: Error, request:Request, response:Response, nextscript:NextFunction) => {
     if(err instanceof Error) {
